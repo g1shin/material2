@@ -1,0 +1,22 @@
+.mat-stepper-header {
+  position: fixed;
+  height: 72px;
+}
+.mat-step{
+
+  &::before{
+
+  }
+
+  &::after{
+
+  }
+
+  &:first-child::before{
+
+  }
+
+  &:last-child::after{
+
+  }
+}
