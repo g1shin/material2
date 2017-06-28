@@ -7,6 +7,7 @@
  */
 
 import {Component} from '@angular/core';
+import {TemplatePortal} from '../core';
 @Component({
     moduleId: module.id,
     selector: 'mat-step',
@@ -14,4 +15,9 @@ import {Component} from '@angular/core';
 })
 export class MdStep {
     active: boolean = false;
+    isLast: boolean = false
+
+    /** The portal that will be the hosted content of the step */
+    private _contentPortal: TemplatePortal | null = null;
+    get content(): TemplatePortal | null { return this._contentPortal; };
 }
