@@ -11,11 +11,11 @@ import {TemplatePortal} from '../core';
 @Component({
     moduleId: module.id,
     selector: 'mat-step',
-    templateUrl: 'step.html'
+    templateUrl: ''
 })
 export class MdStep {
     active: boolean = false;
-    isLast: boolean = false
+    isLast: boolean = false;
 
     /** The portal that will be the hosted content of the step */
     private _contentPortal: TemplatePortal | null = null;

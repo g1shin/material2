@@ -8,8 +8,7 @@
         </div>
         <div *ngIf="!step.isLast" class="connector-line"></div>
     </div>
-    <div *ngIf="orientation == 'vertical' && step.active">{{step.content}}</div>
+    <div *ngIf="'orientation' == 'vertical' && step.active">{{step.content}}</div>
 </div>
-<div class="mat-stepper-horizontal">
-
+<div class="mat-stepper-horizontal" *ngIf="'orientation' == 'horizontal'">
 </div>
