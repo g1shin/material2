@@ -25,6 +25,7 @@ import {
 } from '@angular/core';
 import {LEFT_ARROW, RIGHT_ARROW, ENTER, SPACE} from '../keyboard/keycodes';
 import {CdkStepLabel} from './step-label';
+import {coerceBooleanProperty} from '../coercion';
 
 /** Used to generate unique ID for each stepper component. */
 let nextId = 0;
@@ -55,6 +56,19 @@ export class CdkStep {
   /** Template for step content. */
   @ViewChild(TemplateRef) content: TemplateRef<any>;
 
+  @Input()
+  get disabled() { return this._disabled; }
+  set disabled(value: any) {
+    this._disabled = coerceBooleanProperty(value);
+  }
+  private _disabled = false;
+
+  get completed() { return this._completed; }
+  set completed(value: any) {
+    this._completed = coerceBooleanProperty(value);
+  }
+  private _completed = false;
+
   /** Label of the step. */
   @Input()
   label: string;
@@ -63,6 +77,7 @@ export class CdkStep {
 
   /** Selects this step component. */
   select(): void {
+    if (this.disabled) { return; }
     this._stepper.selected = this;
   }
 }
@@ -113,13 +128,15 @@ export class CdkStepper {
 
   /** Selects and focuses the next step in list. */
   next(): void {
-    if (this._selectedIndex == this._steps.length - 1) { return; }
+    if (this._selectedIndex == this._steps.length - 1
+        || this._steps.toArray()[this._selectedIndex + 1].disabled) { return; }
     this.selectedIndex++;
   }
 
   /** Selects and focuses the previous step in list. */
   previous(): void {
-    if (this._selectedIndex == 0) { return; }
+    if (this._selectedIndex == 0
+        || this._steps.toArray()[this._selectedIndex - 1].disabled) { return; }
     this.selectedIndex--;
   }
 

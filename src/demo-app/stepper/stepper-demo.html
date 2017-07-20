@@ -1,3 +1,19 @@
+<h2>Linear Stepper Demo</h2>
+<mat-vertical-stepper>
+  <mat-step *ngFor="let step of linearSteps" [label]="step.label" [disabled]="step.disabled">
+    <md-input-container>
+      <input mdInput placeholder="Answer" [formControl]="formControl"
+             [(ngModel)]="step.content" required>
+      <md-error>This field is required</md-error>
+    </md-input-container>
+    <div>
+      <button md-button mdStepperPrevious>Back</button>
+      <button md-button mdStepperNext>Next</button>
+    </div>
+  </mat-step>
+</mat-vertical-stepper>
+
+
 <h2>Horizontal Stepper Demo</h2>
 <mat-horizontal-stepper>
   <mat-step *ngFor="let step of steps" [label]="step.label">
@@ -29,7 +45,8 @@
 <mat-vertical-stepper>
   <mat-step *ngFor="let step of steps" [label]="step.label">
     <md-input-container>
-      <input mdInput placeholder="Answer" [(ngModel)]="step.content">
+      <input mdInput placeholder="Answer" [(ngModel)]="step.content" required>
+      <md-error>This field is required</md-error>
     </md-input-container>
     <div>
       <button md-button mdStepperPrevious>Back</button>
