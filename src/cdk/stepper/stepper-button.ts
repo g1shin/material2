@@ -13,6 +13,7 @@ import {CdkStepper} from './stepper';
   selector: 'button[cdkStepperNext]',
   host: {
     '(click)': '_onClick()',
+    'type': 'button'
   }
 })
 export class CdkStepperNext {
@@ -27,6 +28,7 @@ export class CdkStepperNext {
   selector: 'button[cdkStepperPrevious]',
   host: {
     '(click)': '_onClick()',
+    'type': 'button'
   }
 })
 export class CdkStepperPrevious {

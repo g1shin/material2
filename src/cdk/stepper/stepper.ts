@@ -99,9 +99,11 @@ export class CdkStepper {
   /** The index of the selected step. */
   get selectedIndex() { return this._selectedIndex; }
   set selectedIndex(index: number) {
-    if (this._selectedIndex == index) { return; }
-    this._emitStepperSelectionEvent(index);
-    this._setStepFocused(this._selectedIndex);
+    if (this._selectedIndex != index && !this._steps.toArray()[index].disabled) {
+      this._steps.toArray()[this._selectedIndex].completed = true;
+      this._emitStepperSelectionEvent(index);
+      this._setStepFocused(this._selectedIndex);
+    }
   }
   private _selectedIndex: number = 0;
 
@@ -171,7 +173,7 @@ export class CdkStepper {
         break;
       case SPACE:
       case ENTER:
-        this._emitStepperSelectionEvent(this._focusIndex);
+        this.selectedIndex = this._focusIndex;
         break;
       default:
         // Return to avoid calling preventDefault on keys that are not explicitly handled.

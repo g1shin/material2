@@ -1,18 +1,57 @@
 <h2>Linear Stepper Demo</h2>
-<mat-vertical-stepper>
-  <mat-step *ngFor="let step of linearSteps" [label]="step.label" [disabled]="step.disabled">
-    <md-input-container>
-      <input mdInput placeholder="Answer" [formControl]="formControl"
-             [(ngModel)]="step.content" required>
-      <md-error>This field is required</md-error>
-    </md-input-container>
-    <div>
-      <button md-button mdStepperPrevious>Back</button>
-      <button md-button mdStepperNext>Next</button>
-    </div>
-  </mat-step>
-</mat-vertical-stepper>
+<form [formGroup]="formGroup" novalidate>
+  <div formArrayName="formArray">
+    <mat-vertical-stepper #linearStepper [(selectedIndex)]="activeIndex">
+      <mat-step>
 
+        <div [formGroupName]="0">
+          <ng-template md-step-label>Fill out your name</ng-template>
+          <md-input-container>
+            <input mdInput placeholder="First Name" formControlName="firstNameFormCtrl" required>
+            <md-error>This field is required</md-error>
+          </md-input-container>
+
+          <md-input-container>
+            <input mdInput placeholder="Last Name" formControlName="lastNameFormCtrl" required>
+            <md-error>This field is required</md-error>
+          </md-input-container>
+          <div>
+            <button md-button mdStepperNext>Next</button>
+          </div>
+        </div>
+      </mat-step>
+
+      <mat-step [disabled]="!formGroup.controls.formArray.controls[0].valid">
+        <!--<form [formGroup]="formGroup" novalidate>-->
+        <!--<div formArrayName="formArray">-->
+        <div [formGroupName]="1">
+          <ng-template md-step-label>
+            <div (click)="onHeaderClick(1)">Fill out your phone number</div>
+          </ng-template>
+          <md-input-container>
+            <input mdInput placeholder="Phone number" formControlName="phoneFormCtrl" required>
+            <md-error>This field is required</md-error>
+          </md-input-container>
+          <div>
+            <button md-button mdStepperPrevious>Back</button>
+            <button md-button mdStepperNext>Next</button>
+          </div>
+        </div>
+        <!--</div>-->
+        <!--</form>-->
+      </mat-step>
+
+      <mat-step >
+        <ng-template md-step-label>Confirm your information</ng-template>
+        Everything seems correct.
+        <div>
+          <button md-button mdStepperPrevious>Back</button>
+          <button md-button mdStepperNext>Next</button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </div>
+</form>
 
 <h2>Horizontal Stepper Demo</h2>
 <mat-horizontal-stepper>

@@ -14,6 +14,7 @@ import {MdStepper} from './stepper';
   selector: 'button[mdStepperNext]',
   host: {
     '(click)': '_onClick()',
+    'type': 'button'
   }
 })
 export class MdStepperNext extends CdkStepperNext {
@@ -26,6 +27,7 @@ export class MdStepperNext extends CdkStepperNext {
   selector: 'button[mdStepperPrevious]',
   host: {
     '(click)': '_onClick()',
+    'type': 'button'
   }
 })
 export class MdStepperPrevious extends CdkStepperPrevious {
