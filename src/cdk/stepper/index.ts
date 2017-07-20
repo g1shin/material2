@@ -11,13 +11,15 @@ import {CdkStepper, CdkStep} from './stepper';
 import {CommonModule} from '@angular/common';
 import {CdkStepLabel} from './step-label';
 import {PortalModule} from '../portal';
+import {CdkStepperNext, CdkStepperPrevious} from './stepper-button';
 
 @NgModule({
   imports: [CommonModule, PortalModule],
-  exports: [CdkStep, CdkStepper, CdkStepLabel],
-  declarations: [CdkStep, CdkStepper, CdkStepLabel]
+  exports: [CdkStep, CdkStepper, CdkStepLabel, CdkStepperNext, CdkStepperPrevious],
+  declarations: [CdkStep, CdkStepper, CdkStepLabel, CdkStepperNext, CdkStepperPrevious]
 })
 export class CdkStepperModule {}
 
 export * from './stepper';
 export * from './step-label';
+export * from './stepper-button';
