@@ -1,9 +1,11 @@
+@import '../core/style/variables';
+
 $mat-horizontal-stepper-header-height: 72px !default;
 $mat-label-header-height: 24px !default;
 $mat-stepper-label-min-width: 50px !default;
 $mat-stepper-side-gap: 24px !default;
 $mat-vertical-stepper-content-margin: 12px !default;
-$mat-vertical-stepper-content-padding: 16px 0 32px $mat-stepper-side-gap !default;
+$mat-vertical-content-padding-bottom: 32px !default;
 $mat-vertical-content-container-padding: 8px !default;
 $mat-connector-line-width: 1px !default;
 $mat-connector-line-gap: 8px !default;
@@ -43,6 +45,7 @@ $mat-vertical-stepper-margin-top: $mat-stepper-side-gap - $mat-connector-line-ga
   line-height: $mat-horizontal-stepper-header-height;
   overflow: hidden;
   align-items: center;
+  outline: none;
 
   .mat-stepper-index {
     margin-right: $mat-connector-line-gap;
@@ -55,6 +58,7 @@ $mat-vertical-stepper-margin-top: $mat-stepper-side-gap - $mat-connector-line-ga
   display: flex;
   align-items: center;
   margin: $mat-connector-line-gap 0;
+  outline: none;
 
   .mat-stepper-index {
     margin-right: $mat-vertical-stepper-content-margin;
@@ -70,8 +74,16 @@ $mat-vertical-stepper-margin-top: $mat-stepper-side-gap - $mat-connector-line-ga
   height: 0;
 }
 
-.mat-horizontal-stepper-content[aria-expanded='false'] {
-    display: none;
+.mat-horizontal-stepper-content {
+  overflow: hidden;
+
+  &[aria-expanded='false'] {
+    height: 0;
+  }
+}
+
+.horizontal-content-container {
+  overflow: hidden;
 }
 
 .vertical-content-container {
@@ -83,14 +95,11 @@ $mat-vertical-stepper-margin-top: $mat-stepper-side-gap - $mat-connector-line-ga
 
 .mat-vertical-stepper-content {
   padding-left: $mat-stepper-side-gap;
+  overflow: hidden;
+}
 
-  &[aria-expanded='false'] {
-    display: none;
-  }
-
-  &[aria-expanded='true'] {
-    padding: $mat-vertical-stepper-content-padding;
-  }
+.vertical-content {
+  padding-bottom: $mat-vertical-content-padding-bottom;
 }
 
 .mat-step {

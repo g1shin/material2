@@ -19,7 +19,7 @@ import {
   ElementRef,
   Component,
   ContentChild,
-  ViewChild,
+  ViewChild, AfterContentChecked,
   TemplateRef
 } from '@angular/core';
 import {LEFT_ARROW, RIGHT_ARROW, ENTER, SPACE} from '@angular/cdk/keyboard';
@@ -29,6 +29,12 @@ import {AbstractControl} from '@angular/forms';
 
 /** Used to generate unique ID for each stepper component. */
 let nextId = 0;
+
+/**
+ * Position state of the content of each step in horizontal stepper that is used for transitioning
+ * the content into correct position upon step selection change.
+ */
+export type CdkStepContentPositionState = 'left' | 'center' | 'right';
 
 /** Change event emitted on selection changes. */
 export class CdkStepperSelectionEvent {
@@ -71,6 +77,20 @@ export class CdkStep {
   @Input()
   label: string;
 
+  /** Position state of step. */
+  _position: CdkStepContentPositionState;
+
+  /** Sets the CdkStepContentPositionState of step. */
+  set position(position: number) {
+    if (position < 0) {
+      this._position = 'left';
+    } else if (position > 0) {
+      this._position = 'right';
+    } else {
+      this._position = 'center';
+    }
+  }
+
   constructor(private _stepper: CdkStepper) { }
 
   /** Selects this step component. */
@@ -86,7 +106,7 @@ export class CdkStep {
     '(keydown)': '_onKeydown($event)'
   },
 })
-export class CdkStepper {
+export class CdkStepper implements AfterContentChecked {
   /** The list of step components that the stepper is holding. */
   @ContentChildren(CdkStep) _steps: QueryList<CdkStep>;
 
@@ -105,7 +125,8 @@ export class CdkStepper {
   set selectedIndex(index: number) {
     if (this._selectedIndex != index && !this._anyControlsInvalid(index)) {
       this._emitStepperSelectionEvent(index);
-      this._focusStep(this._selectedIndex);
+      this._focusIndex = this._selectedIndex;
+      // this._focusStep(this._selectedIndex);
     }
   }
   private _selectedIndex: number = 0;
@@ -129,6 +150,10 @@ export class CdkStepper {
 
   constructor() {
     this._groupId = nextId++;
+  }
+
+  ngAfterContentChecked(): void {
+    this._setStepPosition();
   }
 
   /** Selects and focuses the next step in list. */
@@ -181,6 +206,11 @@ export class CdkStepper {
     event.preventDefault();
   }
 
+  /** Get whether a step has 'expanded' or 'collapsed' state for vertical stepper. */
+  _getExpandedState(index: number) {
+    return index == this._selectedIndex ? 'expanded' : 'collapsed';
+  }
+
   private _focusStep(index: number) {
     this._focusIndex = index;
     this._stepHeader.toArray()[this._focusIndex].nativeElement.focus();
@@ -192,10 +222,22 @@ export class CdkStepper {
     if (this._linear) {
       for (let i = 0; i < index; i++) {
         if (!stepsArray[i].stepControl.valid) {
+          console.log('here');
+          this._stepHeader.toArray()[index].nativeElement.blur();
           return true;
         }
       }
     }
     return false;
+  }
+
+  /**
+   * Set the shifted index position of each step in horizontal stepper, where zero represents
+   * the selected step.
+   */
+  private _setStepPosition() {
+    this._steps.forEach((step: CdkStep, index: number) => {
+      step.position = index - this._selectedIndex;
+    });
   }
 }

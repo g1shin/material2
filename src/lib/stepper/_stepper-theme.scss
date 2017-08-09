@@ -9,6 +9,12 @@
 
   .mat-horizontal-stepper-header, .mat-vertical-stepper-header {
 
+
+    &:focus,
+    &:hover {
+      background: mat-color($background, hover);
+    }
+
     .mat-stepper-label {
       color: mat-color($foreground, text);
     }
