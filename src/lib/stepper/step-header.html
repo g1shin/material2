@@ -4,8 +4,8 @@
   <md-icon *ngIf="icon == 'edit'">create</md-icon>
   <md-icon *ngIf="icon == 'done'">done</md-icon>
 </div>
-<div [class.mat-step-label-active]="active"
-     [class.mat-step-label-inactive]="!active">
+<div class="mat-step-label"
+     [class.mat-step-label-active]="active">
   <!-- If there is a label template, use it. -->
   <ng-container *ngIf="_templateLabel" [ngTemplateOutlet]="label.template">
   </ng-container>
